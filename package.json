@@ -1,0 +1,32 @@
+{
+  "name": "@pipeworx/mcp-neiss",
+  "version": "0.1.0",
+  "description": "NEISS — CPSC's national weighted consumer-product injury estimates.",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "bin": {
+    "mcp-neiss": "bin/cli.js"
+  },
+  "keywords": ["mcp", "mcp-server", "model-context-protocol", "pipeworx", "neiss"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pipeworx-io/mcp-neiss.git"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "tsx": "^4.19.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@cloudflare/workers-types": "^4.20260405.1"
+  },
+  "pipeworx": {
+    "sourceHash": "v1-dde2565b94aab04bb83c8621704cb1cad8064cf6c7e422cb287a0370d60c7f71",
+    "sourceCommit": "8dbe088fb6f9d2c88f934173742329b4e20a67d6"
+  }
+}
