@@ -44,10 +44,30 @@ interface McpToolExport {
  * scripts/neiss/load-data.mjs (see src/store.ts); nothing case-level or
  * patient-level is kept anywhere downstream.
  */
-import { PRODUCT_CODES } from './product-codes.js';
+import type { NeissProductCodeRow } from './product-codes.js';
 import { estimatesForProductYears, latestYear, requireDb, topProducts, type EstimateRow } from './store.js';
 
 const SOURCE = 'CPSC, National Electronic Injury Surveillance System (NEISS) annual public-use file';
+
+// fleet #3615: the ~800-row NEISS product/activity-code table used to be a
+// module-scope value import, so every gateway isolate carried it whether or
+// not it ever served a NEISS call. It is now a BAKED INDEX (KV at deploy,
+// injected as args._bakedIndex). NEVER value-import ./product-codes.js here
+// again — only a type-only import is erased; a value import puts the whole
+// table back into every isolate.
+let PRODUCT_CODES: NeissProductCodeRow[] = [];
+function ensureProductCodes(args: Record<string, unknown>): void {
+  if (PRODUCT_CODES.length) return;
+  const idx = args._bakedIndex as Record<string, unknown> | null | undefined;
+  const codes = idx?.PRODUCT_CODES;
+  if (!Array.isArray(codes) || codes.length === 0) {
+    throw new Error(
+      `neiss: the product-code table is unavailable (${idx == null ? 'not injected' : 'malformed'}). ` +
+        'The gateway loads it from KV on the first call into this pack; this is a server-side fault, not a bad query — retry shortly.',
+    );
+  }
+  PRODUCT_CODES = codes as NeissProductCodeRow[];
+}
 
 const AGE_BUCKETS = ['0-4', '5-14', '15-24', '25-44', '45-64', '65+'] as const;
 type AgeBucket = (typeof AGE_BUCKETS)[number] | 'all';
@@ -277,6 +297,7 @@ function neissProductCodes(args: Record<string, unknown>) {
 }
 
 async function callTool(name: string, args: Record<string, unknown>): Promise<unknown> {
+  ensureProductCodes(args);
   switch (name) {
     case 'neiss_injuries':
       return neissInjuries(args);

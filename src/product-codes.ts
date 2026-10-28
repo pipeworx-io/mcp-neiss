@@ -2,8 +2,20 @@
  * CPSC NEISS product/activity codes (Appendix H of the NEISS Coding
  * Manual) — a fixed lookup, not live data, so it ships in the pack
  * rather than a store. 802 codes.
+ *
+ * fleet #3615: this table used to be a module-scope array value-imported
+ * into index.ts, so every gateway isolate carried it whether or not it ever
+ * served a NEISS call. It is now a BAKED INDEX: registered in
+ * workers/gateway/src/pack-baked-indexes.json, uploaded to KV at deploy, and
+ * injected into index.ts as args._bakedIndex. index.ts may only TYPE-import
+ * this module — a value import puts the whole table back into every
+ * isolate. No bake script: this is a fixed, hand-maintained list copied
+ * straight from CPSC's own Coding Manual appendix, not crawled or generated.
+ * Hand-edit this file directly if CPSC revises Appendix H.
  */
-export const PRODUCT_CODES: ReadonlyArray<readonly [string, string]> = [
+export type NeissProductCodeRow = readonly [string, string];
+
+export const PRODUCT_CODES: ReadonlyArray<NeissProductCodeRow> = [
   ['0102', 'Wringer washing machines'],
   ['0106', 'Electric clothes dryers without washers'],
   ['0107', 'Gas clothes dryers without washers'],

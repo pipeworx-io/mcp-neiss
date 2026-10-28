@@ -1,6 +1,6 @@
 {
   "name": "@pipeworx/mcp-neiss",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "NEISS — CPSC's national weighted consumer-product injury estimates.",
   "type": "module",
   "main": "src/index.ts",
@@ -26,7 +26,7 @@
     "@cloudflare/workers-types": "^4.20260405.1"
   },
   "pipeworx": {
-    "sourceHash": "v1-dde2565b94aab04bb83c8621704cb1cad8064cf6c7e422cb287a0370d60c7f71",
-    "sourceCommit": "8dbe088fb6f9d2c88f934173742329b4e20a67d6"
+    "sourceHash": "v1-0048db2a1539477e5dd2b4af7a05ca52b114dc1b9b218f48c43d176bc2b5284a",
+    "sourceCommit": "774de7f685a75e02d0b828d24a7b94794102152c"
   }
 }

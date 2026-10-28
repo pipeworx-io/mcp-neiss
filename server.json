@@ -3,7 +3,7 @@
   "name": "io.github.pipeworx-io/neiss",
   "title": "Neiss",
   "description": "NEISS — CPSC's national weighted consumer-product injury estimates.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "websiteUrl": "https://pipeworx.io/packs/neiss",
   "repository": {
     "url": "https://github.com/pipeworx-io/mcp-neiss",
